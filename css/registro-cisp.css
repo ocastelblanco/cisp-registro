@@ -1,0 +1,112 @@
+body {
+    background-color: #2f3d46;
+}
+.navbar-inverse {
+    background-color: #25323b;
+}
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:hover,
+.navbar-inverse .navbar-nav>.active>a:focus {
+    color: #fff;
+    background-color: #428bca;
+}
+#instrucciones {
+    margin-top: 60px;
+    text-align: center;
+}
+#instrucciones h1 {
+    color: #13b5e4;
+}
+#instrucciones p {
+    color: white;
+}
+/* Solo cuando se visualiza en una pantalla mediana o superior (992px+) */
+/*
+@media (min-width: 992px) {
+    #plandeaccion .fila01,
+    #plandeaccion .fila02 {
+        margin-top: 20px;
+    }
+}
+#plandeaccion {
+    margin-bottom: 20px;
+}
+#plandeaccion .filaPar {
+    background-color: #DDD;
+}
+#plandeaccion .filaImpar {
+    background-color: #AAA;
+}
+#plandeaccion .botonesAccion {
+    text-align: right;
+    margin-bottom: 10px;
+}
+*/
+.oculto {
+    display: none;
+}
+#guardando {
+    position: fixed;
+    right; 10px;
+    bottom: 0;
+}
+.footer img {
+    margin-left: 5%;
+    width: 25%;
+    height: auto;
+}
+.footer .copyright {
+    font-size: 18px;
+    color: white;
+    margin-top: 2em;
+}
+/* --- Estilos para admin.php --- */
+#login {
+    color:white;
+}
+#login h2 {
+    text-align:center;
+}
+/* --- Estilos para dashboard --- */
+#dashboard #wrapper {
+    overflow: hidden;
+}
+#dashboard h1 {
+    color: white;
+}
+#dashboard .side-nav {
+    background-color: #25323b;
+    border-right: 1px solid;
+    border-color: #080808;
+}
+#dashboard #tablaIniciativas th,
+#dashboard #tablaIniciativas td:nth-child(4) {
+    white-space:nowrap;
+}
+#dashboard #tablaIniciativas td:nth-child(4),
+#dashboard #tablaIniciativas td:nth-child(5),
+#dashboard #tablaIniciativas td:nth-child(6),
+#dashboard #tablaIniciativas td:nth-child(7)  {
+    text-align:center;
+}
+#tablaIniciativas i.fa.fa-check-circle-o,
+#tablaIniciativas i.fa.fa-envelope {
+    color:#06cc06;
+}
+#tablaIniciativas i.fa.fa-ban {
+    color:#cc0606;
+}
+#tablaIniciativas i.fa.fa-circle-o,
+#tablaIniciativas i.fa.fa-envelope-o {
+    color:#cccc06;
+}
+#ventanaDetalles .modal-dialog {
+    width:90%;
+}
+#ventanaDetalles .well.well-sm>strong {
+    font-size:11px;
+}
+#ventanaDetalles .well.well-sm>h4 {
+    line-height: 12px;
+    margin-top: 15px;
+}
