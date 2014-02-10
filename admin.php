@@ -113,19 +113,17 @@
     </div> <!-- /#login .container -->
     
     <br><br><br><br>  
-    
-	<div class="footer">
-		<div class="container">
-			<div class="col-md-1">&nbsp;</div>
-			<div class="col-md-6 copyright">2014® CIUDADANÍAS</div>
-			<div class="col-md-4">
-				<img src="img/logoOEI.jpg">
-				<img src="img/logoMercosur.jpg">
-				<img src="img/logoParlamentoJuvenil2014.jpg">
-			</div><!-- /.col-md-4 -->
-			<div class="col-md-1">&nbsp;</div>
-		</div><!-- /.container -->
-	</div><!-- /.footer -->
+
+		<div class="footer">
+			<div class="row">
+				<div class="col-lg-5 copyright">2014® CIUDADANÍAS</div>
+				<div class="col-lg-7">
+					<img src="img/logoOEI.jpg">
+					<img src="img/logoMercosur.jpg">
+					<img src="img/logoParlamentoJuvenil2014.jpg">
+				</div><!-- /.col-lg-7 -->
+			</div><!-- /.row -->
+		</div><!-- /.footer -->
     
     
 	<div class="modal fade" id="ventanaProgreso" tabindex="-1" role="dialog" aria-labelledby="Ventana avisos" aria-hidden="true">

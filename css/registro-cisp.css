@@ -74,7 +74,7 @@ body {
 #dashboard h1 {
     color: white;
 }
-#dashboard .side-nav {
+.side-nav {
     background-color: #25323b;
     border-right: 1px solid;
     border-color: #080808;
@@ -90,14 +90,16 @@ body {
     text-align:center;
 }
 #tablaIniciativas i.fa.fa-check-circle-o,
-#tablaIniciativas i.fa.fa-envelope {
+#tablaIniciativas i.fa.fa-envelope,
+#tablaDocentes i.fa.fa-envelope {
     color:#06cc06;
 }
 #tablaIniciativas i.fa.fa-ban {
     color:#cc0606;
 }
 #tablaIniciativas i.fa.fa-circle-o,
-#tablaIniciativas i.fa.fa-envelope-o {
+#tablaIniciativas i.fa.fa-envelope-o,
+#tablaDocentes i.fa.fa-envelope-o {
     color:#cccc06;
 }
 #ventanaDetalles .modal-dialog {
@@ -109,4 +111,18 @@ body {
 #ventanaDetalles .well.well-sm>h4 {
     line-height: 12px;
     margin-top: 15px;
+}
+#revisar h1,
+#revisar p {
+    color:white;
+}
+#notificar h1,
+#notificar p {
+    color: white;
+}
+#notificar h3.panel-title #tituloTabla {
+    margin-top: 0.5em;
+}
+#notificar #ventanaProgreso p {
+    color:#000000;
 }

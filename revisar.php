@@ -37,7 +37,7 @@
     <![endif]-->
   </head>
 
-<body id="dashboard">
+<body id="revisar">
 
     <div id="wrapper">
 
@@ -100,14 +100,14 @@
         </div><!-- /.row -->
 
 		<div class="footer">
-			<div class="container">
+			<div class="row">
 				<div class="col-lg-5 copyright">2014® CIUDADANÍAS</div>
 				<div class="col-lg-7">
 					<img src="img/logoOEI.jpg">
 					<img src="img/logoMercosur.jpg">
 					<img src="img/logoParlamentoJuvenil2014.jpg">
-				</div><!-- /.col-lg-4 -->
-			</div><!-- /.container -->
+				</div><!-- /.col-lg-7 -->
+			</div><!-- /.row -->
 		</div><!-- /.footer -->
 		
       </div><!-- /#page-wrapper -->

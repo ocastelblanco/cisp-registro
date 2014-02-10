@@ -1,3 +1,16 @@
+<?php
+	session_start();
+	if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']) && session_id() == $_GET['ses']) {
+		if ($_SESSION['pais'] == "Todos") {
+			$adminGral = true;
+			$administrador = "Administrador general";
+			$icono = "fa-globe";
+		} else {
+			$adminGral = false;
+			$administrador = "Administrador ".$_SESSION['pais'];
+			$icono = "fa-user";
+		}
+	?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,61 +38,166 @@
   </head>
 
 <body id="notificar">
-<?php
 
-//SMTP needs accurate times, and the PHP time zone MUST be set
-//This should be done in your php.ini, but this is how to do it if you don't have access to that
-date_default_timezone_set('Etc/UTC');
+    <div id="wrapper">
 
-require 'lib/PHPMailerAutoload.php';
+      <!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Abrir/cerrar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="dashboard.php?ses=<?php echo session_id(); ?>"><img src="img/ciudadanias.png" class="img-responsive"></a>
+        </div>
 
-//Create a new PHPMailer instance
-$mail = new PHPMailer();
-//Tell PHPMailer to use SMTP
-$mail->isSMTP();
-//Enable SMTP debugging
-// 0 = off (for production use)
-// 1 = client messages
-// 2 = client and server messages
-$mail->SMTPDebug = 2;
-//Ask for HTML-friendly debug output
-$mail->Debugoutput = 'html';
-//Set the hostname of the mail server
-$mail->Host = 'host.redeaprender.org';
-//Set the SMTP port number - likely to be 25, 465 or 587
-$mail->Port = 587;
-//Whether to use SMTP authentication
-$mail->SMTPAuth = true;
-// SMTP password
-$mail->SMTPSecure = 'tls';  
-//Username to use for SMTP authentication
-$mail->Username = 'femcidi@redeaprender.org';
-//Password to use for SMTP authentication
-$mail->Password = 'FEMCIDI';
-//Set who the message is to be sent from
-$mail->setFrom('femcidi@redeaprender.org', 'First Last');
-//Set an alternative reply-to address
-$mail->addReplyTo('femcidi@redeaprender.org', 'First Last');
-//Set who the message is to be sent to
-$mail->addAddress('ocastelblanco@gmail.com', 'Oliver Castelblanco');
-$mail->isHTML(true);  
-//Set the subject line
-$mail->Subject = 'PHPMailer SMTP test';
-//Read an HTML message body from an external file, convert referenced images to embedded,
-//convert HTML into a basic plain-text alternative body
-//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
-$mail->msgHTML('Este es un <strong>mensaje</strong> muy importante.');
-//Replace the plain text body with one created manually
-$mail->AltBody = 'This is a plain-text message body';
-//Attach an image file
-$mail->addAttachment('img/ciudadanias.png');
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li><a href="dashboard.php?ses=<?php echo session_id(); ?>"><i class="fa fa-dashboard"></i> Panel de Control</a></li>
+            <li><a href="revisar.php?ses=<?php echo session_id(); ?>"><i class="fa fa-tasks"></i> Revisar y aprobar iniciativas</a></li>
+            <li class="active"><a href="notificar.php?ses=<?php echo session_id(); ?>"><i class="fa fa-envelope-o"></i> Notificar docentes</a></li>
+            <li><a href="admin.php?logout=<?php echo session_id(); ?>"><i class="fa fa-sign-out"></i> Salir</a></li>
+          </ul>
 
-//send the message, check for errors
-if (!$mail->send()) {
-    echo "Mailer Error: " . $mail->ErrorInfo;
-} else {
-    echo "Message sent!";
-}
-?>
+          <ul class="nav navbar-nav navbar-right navbar-user">
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa <?php echo $icono; ?>"></i> <?php echo $administrador; ?> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="admin.php?logout=<?php echo session_id(); ?>"><i class="fa fa-sign-out"></i> Salir</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Notificar docentes<small> sobre iniciativas aprobadas o descartadas</small></h1>
+            <p>Con esta herramienta podrá notificar a todos los docentes, tanto a los que ha aprobado su Iniciativa Pedagógica, como a los que no, directamente a sus correos electrónicos.</p>
+            <p>Por lo anterior, le recomendamos que, antes de cualquier proceso de notificación, haya aprobado las 20 iniciativas deseadas y haya descartado las restantes.</p>
+            <p>Debido a que queremos evitar ser clasificados como origen de correo spam, este proceso de envío puede durar, en promedio, un minuto por cada registro. Le recomendamos, por lo tanto, que cuando haga clic en el botón de <strong>Notificar docentes seleccionados</strong>, deje al sistema procesar los envíos, sin interrumpirlo, ni cerrar el navegador, ni apagar el computador.</p>
+          </div>
+        </div><!-- /.row -->
+      	<div class="row">
+          <div class="col-lg-12">
+            <div id="panelTabla" class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                	<div class="row">
+                		<div class="col-md-6">
+                			<p id="tituloTabla"><i class="fa fa-bars"></i> Docentes registrados: </p>
+            			</div>
+	            		<div class="col-md-6 text-right">
+		                	<button id="selectToggle" class="btn btn-warning">
+		                		<i class="fa fa-square-o"></i> Deseleccionar todos
+		            		</button>
+	            		</div>
+            		</div>
+        		</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table id="tablaDocentes" class="table table-bordered table-hover table-striped tablesorter">
+                    <thead>
+                      <tr>
+                      	<th class="header">Sel.</th>
+                      	<th class="header">Nombres</th>
+                      	<th class="header">Apellidos</th>
+                      	<th class="header">Iniciativa</th>
+                      	<th class="header">País</th>
+                      	<th class="header">Estado</th>
+                  	  </tr>
+                    </thead>
+                    <tbody>
+                    	<tr>
+                    		<td colspan="6">
+                    			<i class="fa fa-spinner fa-spin"></i> Cargando contenido...
+                			</td>
+            			</tr>
+                    </tbody>
+                  </table>
+                  <div class="row">
+                  	<div id="tablaPie" class="col-lg-8"></div>
+                  	<div class="col-lg-4">
+                  		<button id="accionNotificar" class="btn btn-danger btn-block"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Notificar <span></span> docentes seleccionados</button>
+                  	</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.row -->
+
+		<div class="footer">
+			<div class="row">
+				<div class="col-lg-5 copyright">2014® CIUDADANÍAS</div>
+				<div class="col-lg-7">
+					<img src="img/logoOEI.jpg">
+					<img src="img/logoMercosur.jpg">
+					<img src="img/logoParlamentoJuvenil2014.jpg">
+				</div><!-- /.col-lg-7 -->
+			</div><!-- /.row -->
+		</div><!-- /.footer -->
+		
+      </div><!-- /#page-wrapper -->
+
+		
+    </div><!-- /#wrapper -->
+    
+    
+	<div class="modal fade" id="ventanaProgreso" tabindex="-1" role="dialog" aria-labelledby="Notificación de docentes" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Notificación de docentes</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="paso paso-1 alert alert-danger alert-dismissable">
+			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			  	<i class="fa fa-exclamation-triangle fa-lg"></i> ¡Revise bien! Hay <span id="sinAprobar"></span> docentes con iniciativa pendiente de aprobación. Es mejor que apruebe y descarte todas las iniciativas antes de notificar a los docentes.
+			</div>
+	      	<div class="paso paso-2 alert alert-info">
+			  	<i class="fa fa-exclamation-triangle fa-lg"></i> ¡Recuerde! No cancele esta operación, no cierre esta ventana, no cierre el navegador ni apague el computador hasta que el proceso haya finalizado.
+			</div>
+	        <p class="paso paso-1">El sistema está listo para iniciar el envío de notificaciones por correo electrónico a <span id="porNotificar"></span> docentes. Oprima el botón <strong>Iniciar envío</strong> para seguir con el proceso.</p>
+	        <p class="paso paso-2 paso-3">Enviando <span id="envioActual"></span> de <span id="porNotificar"></span> notificaciones.</p>
+	        <p class="paso paso-4">Proceso de envío finalizado. Cierre esta ventana.</p>
+	        <div id="progreso"></div>
+	        <p class="paso paso-2">Preparando correo electrónico</p>
+	        <p class="paso paso-3">Enviando correo a <span class="nombreDocente"></span>.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="cerrarModal" data-dismiss="modal" type="button" class="btn btn-warning paso paso-1 paso-4"><i class="fa fa-times"></i> Cerrar ventana</button>
+	        <button id="continuarNotificacion" type="button" class="btn btn-primary paso paso-1">Iniciar envío <i class="fa fa-angle-double-right"></i></button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+    
+    
+   
+    
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Page Specific Plugins -->
+    <script type="text/javascript">
+    	var pais = '<?php echo $_SESSION['pais']; ?>';
+    </script>
+    <script type="text/javascript" src="js/notificar-admin.js"></script>
 	</body>
 </html>
+<?php
+	} else {
+		$_SESSION = array();
+		session_destroy();
+		header('Location: admin.php');
+	}
+?>
