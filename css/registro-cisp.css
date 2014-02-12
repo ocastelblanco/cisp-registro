@@ -126,3 +126,11 @@ body {
 #notificar #ventanaProgreso p {
     color:#000000;
 }
+#notificar #textoBarraProgreso {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -20px;
+}
+#notificar span.label>span:first-child {
+    display:none;
+}

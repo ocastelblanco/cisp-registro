@@ -25,8 +25,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
-    <!-- Page Specific CSS -->
-    <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
     <!-- Estilos propios -->
     <link href="css/registro-cisp.css" rel="stylesheet">
 
@@ -160,13 +158,20 @@
 			  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			  	<i class="fa fa-exclamation-triangle fa-lg"></i> ¡Revise bien! Hay <span id="sinAprobar"></span> docentes con iniciativa pendiente de aprobación. Es mejor que apruebe y descarte todas las iniciativas antes de notificar a los docentes.
 			</div>
-	      	<div class="paso paso-2 alert alert-info">
+	      	<div class="paso paso-2 paso-3 alert alert-info">
 			  	<i class="fa fa-exclamation-triangle fa-lg"></i> ¡Recuerde! No cancele esta operación, no cierre esta ventana, no cierre el navegador ni apague el computador hasta que el proceso haya finalizado.
 			</div>
 	        <p class="paso paso-1">El sistema está listo para iniciar el envío de notificaciones por correo electrónico a <span id="porNotificar"></span> docentes. Oprima el botón <strong>Iniciar envío</strong> para seguir con el proceso.</p>
-	        <p class="paso paso-2 paso-3">Enviando <span id="envioActual"></span> de <span id="porNotificar"></span> notificaciones.</p>
+	        <p class="paso paso-2 paso-3"><span id="envioActual"></span> notificaciones enviadas de <span class="porNotificar"></span> totales.</p>
 	        <p class="paso paso-4">Proceso de envío finalizado. Cierre esta ventana.</p>
-	        <div id="progreso"></div>
+	        <div id="progreso">
+	        	<div class="progress paso paso-2 paso-3">
+	        		<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+	        			<span class="sr-only">Completado 0%</span>
+	        		</div>
+	        	</div>
+        		<div id="textoBarraProgreso" class="paso paso-2 paso-3">Completado 0%</div>
+        	</div>
 	        <p class="paso paso-2">Preparando correo electrónico</p>
 	        <p class="paso paso-3">Enviando correo a <span class="nombreDocente"></span>.</p>
 	      </div>

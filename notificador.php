@@ -1,16 +1,20 @@
 <?php
-if (isset($_POST['id'])) {
+if (isset($_GET['id'])) {
 	require_once 'lib/config.php';
 	$mysqli = new mysqli($servidor,$usuario,$clave,$basedatos);
 	if ($mysqli->connect_errno) {
 	    echo "Fallo al conectar a MySQL: (".$mysqli->connect_errno.") ".$mysqli->connect_error;
 	}
 	$mysqli->query("SET NAMES 'utf8'");
-	$query = "SELECT `nombres`,`apellidos`,`nombreIP`,`email` FROM `registrodocentes` WHERE `id`="+$_POST['id'];
+	$query = "SELECT `nombres`, `apellidos`, `email`, `nombreIP`, `estado` FROM `registrodocentes` WHERE `id` =".$_GET['id'];
 	$resultado = $mysqli->query($query);
+	$fila = $resultado->fetch_assoc();
 	
-	
-	
+	if ($fila['estado'] == "1") {
+		$textoMensaje = "ha sido aceptada";
+	} else if ($fila['estado'] == "2") {
+		$textoMensaje = "ha sido rechazada";
+	}
 	
 	//SMTP needs accurate times, and the PHP time zone MUST be set
 	//This should be done in your php.ini, but this is how to do it if you don't have access to that
@@ -46,25 +50,29 @@ if (isset($_POST['id'])) {
 	//Set an alternative reply-to address
 	$mail->addReplyTo('femcidi@redeaprender.org', 'Sistema de registro FEMCIDI');
 	//Set who the message is to be sent to
-	$mail->addAddress('ocastelblanco@gmail.com', 'Oliver Castelblanco');
+	$mail->addAddress($fila['email'], $fila['nombres'].' '.$fila['apellidos']);
 	$mail->isHTML(true);  
 	//Set the subject line
-	$mail->Subject = 'PHPMailer SMTP test';
+	$mail->Subject = 'Respuesta desde el sistema de registro FEMCIDI';
 	//Read an HTML message body from an external file, convert referenced images to embedded,
 	//convert HTML into a basic plain-text alternative body
 	//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
-	$mail->msgHTML('Este es un <strong>mensaje</strong> muy importante.');
+	$mail->msgHTML('Su iniciativa <strong>'.$fila['nombreIP'].'</strong> '.$textoMensaje.'.');
 	//Replace the plain text body with one created manually
-	$mail->AltBody = 'This is a plain-text message body';
+	$mail->AltBody = 'Su iniciativa '.$fila['nombreIP'].' '.$textoMensaje.'.';
 	//Attach an image file
 	$mail->addAttachment('img/ciudadanias.png');
+	sleep(30);
 	/*
+	 */
 	//send the message, check for errors
 	if (!$mail->send()) {
-	    echo "Mailer Error: " . $mail->ErrorInfo;
+		echo "{\"resultado\": \"error\", \"error\": \"".$mail->ErrorInfo."\", \"nombres\": \"".$fila["nombres"]."\", \"apellidos\": \"".$fila["apellidos"]."\"}";
 	} else {
-	    echo "Message sent!";
+		echo "{\"resultado\": \"correcto\", \"nombres\": \"".$fila["nombres"]."\", \"apellidos\": \"".$fila["apellidos"]."\"}";
+		$query = "UPDATE `registrodocentes` SET `notificado` = '1' WHERE `id` =".$_GET['id'];
+		$resultado = $mysqli->query($query);
 	}
-	 */
+	$mysqli->close();
 }
 ?>

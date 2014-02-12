@@ -1,7 +1,7 @@
 <?php
-	$estados = array("<span class='label label-default'><i class='fa fa-circle-o'></i> Pendiente de aprobación</span>",
-					"<span class='label label-success'><i class='fa fa-check-circle-o'></i> Aprobada</span>",
-					"<span class='label label-danger'><i class='fa fa-ban'></i> Descartada</span>");
+	$estados = array("<span class='label label-default'><span>0</span><i class='fa fa-circle-o'></i> Pendiente de aprobación</span>",
+					"<span class='label label-success'><span>1</span><i class='fa fa-check-circle-o'></i> Aprobada</span>",
+					"<span class='label label-danger'><span>2</span><i class='fa fa-ban'></i> Descartada</span>");
 	$notificado = array("&nbsp;&nbsp;&nbsp;<i class='fa fa-envelope-o'></i>",
 					"&nbsp;&nbsp;&nbsp;<i class='fa fa-envelope'></i>");
 	require_once 'lib/config.php';
