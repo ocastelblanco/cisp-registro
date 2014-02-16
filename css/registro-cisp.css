@@ -117,7 +117,9 @@ body {
     color:white;
 }
 #notificar h1,
-#notificar p {
+#notificar p,
+#exportar h1,
+#exportar p  {
     color: white;
 }
 #notificar h3.panel-title #tituloTabla {
@@ -133,4 +135,7 @@ body {
 }
 #notificar span.label>span:first-child {
     display:none;
+}
+#ventanaDescarga p {
+    color: #000000;
 }
