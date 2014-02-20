@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 	// 0 = off (for production use)
 	// 1 = client messages
 	// 2 = client and server messages
-	$mail->SMTPDebug = 2;
+	$mail->SMTPDebug = 0;
 	//Ask for HTML-friendly debug output
 	$mail->Debugoutput = 'html';
 	//Set the hostname of the mail server
@@ -61,8 +61,8 @@ if (isset($_GET['id'])) {
 	//Replace the plain text body with one created manually
 	$mail->AltBody = 'Su iniciativa '.$fila['nombreIP'].' '.$textoMensaje.'.';
 	//Attach an image file
-	$mail->addAttachment('img/ciudadanias.png');
-	sleep(30);
+	//$mail->addAttachment('img/ciudadanias.png');
+	sleep(15);
 	/*
 	 */
 	//send the message, check for errors

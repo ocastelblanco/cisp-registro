@@ -80,7 +80,7 @@ function enviarNotificacion(num) {
             $('#ventanaProgreso #textoBarraProgreso').html('Error en el envío de correo a '+datos.nombres+" "+datos.apellidos+": "+datos.error);
         }
         numNotificados++;
-        intervaloNot = window.setTimeout(notificar, 30*1000);
+        intervaloNot = window.setTimeout(notificar, 15*1000);
     });
 }
 function togglerSelect() {
