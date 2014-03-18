@@ -48,6 +48,7 @@
 		<h1>Ficha de convocatoria</h1>
 		<p>A continuación encontrará una ficha que le solicitamos diligenciar sobre su iniciativa pedagógica.</p>
 		<p>Agradecemos anexar cualquier material concerniente a la iniciativa pedagógica, como archivos adjuntos.</p>
+		<p>Si tiene dudas sobre el diligenciamiento de este formulario, escíbanos a: <a href="mailto:cursociudadanias@gmail.com">cursociudadanias@gmail.com</a></p>
     </div><!-- /.page-header -->
 	<form role="form" id="formulario" method="post" action="registro.php">
 	    <div class="container">
@@ -58,11 +59,11 @@
 			    		<div class="panel-heading"><strong>Datos de la Institución Educativa</strong></div>
 			  			<div class="panel-body">
 		    				<div class="form-group">
-		    					<label for="nombreIE">Nombre de la Institución Educativa (IE)</label>
-		    					<input type="text" class="form-control" name="nombreIE" id="nombreIE" placeholder="Ingrese el nombre de la IE" required>
+		    					<label for="nombreIE">Nombre de la Institución Educativa</label>
+		    					<input type="text" class="form-control" name="nombreIE" id="nombreIE" placeholder="Ingrese el nombre de la Institución Educativa" required>
 		  					</div>
 		    				<div class="form-group">
-		    					<label for="pais">País de la Institución Educativa (IE)</label>
+		    					<label for="pais">País de la Institución Educativa</label>
 		    					<select id="pais" name="pais" class="form-control">
 									<option>Seleccione el país</option>
 									<option>Argentina</option>
@@ -106,20 +107,20 @@
 		    				<div class="row">
 		    					<div class="col-md-4">
 				    				<div class="form-group">
-				    					<label for="direccionIE">Dirección IE</label>
-				    					<input type="text" class="form-control" name="direccionIE" id="direccionIE" placeholder="Ingrese la dirección de la IE" required>
+				    					<label for="direccionIE">Dirección de la Institución Educativa</label>
+				    					<input type="text" class="form-control" name="direccionIE" id="direccionIE" placeholder="Ingrese la dirección de la Institución Educativa" required>
 				  					</div>
 		    					</div><!-- /.col-md-4 -->
 		    					<div class="col-md-4">
 				    				<div class="form-group">
-				    					<label for="telefonoIE">Teléfono IE</label>
-				    					<input type="tel" class="form-control" name="telefonoIE" id="telefonoIE" placeholder="Ingrese el teléfono de la IE" required>
+				    					<label for="telefonoIE">Teléfono de la Institución Educativa</label>
+				    					<input type="tel" class="form-control" name="telefonoIE" id="telefonoIE" placeholder="Ingrese el teléfono de la Institución Educativa" required>
 				  					</div>
 		    					</div><!-- /.col-md-4 -->
 		    					<div class="col-md-4">
 				    				<div class="form-group">
-				    					<label for="emailIE">Correo electrónico</label>
-				    					<input type="email" class="form-control" name="emailIE" id="emailIE" placeholder="Ingrese el correo electrónico de la IE" required>
+				    					<label for="emailIE">Correo electrónico de la Institución Educativa</label>
+				    					<input type="email" class="form-control" name="emailIE" id="emailIE" placeholder="Ingrese el correo electrónico de la Institución Educativa" required>
 				  					</div>
 		    					</div><!-- /.col-md-4 -->
 		    				</div><!-- /.row -->
@@ -146,19 +147,19 @@
 			    				<div class="col-md-4">
 				    				<div class="form-group">
 				    					<label for="cargo">Cargo/s</label>
-				    					<input type="text" class="form-control" name="cargo" id="cargo" placeholder="Ingrese sus nombres completos" required>
+				    					<input type="text" class="form-control" name="cargo" id="cargo" placeholder="Ingrese su/s cargo/s en la Institución Educativa" required>
 				  					</div>
 			  					</div><!-- /.col-md-4 -->
 			    				<div class="col-md-4">
 				    				<div class="form-group">
 				    					<label for="area">Área de Conocimiento</label>
-				    					<input type="text" class="form-control" name="area" id="area" placeholder="Ingrese sus apellidos completos" required>
+				    					<input type="text" class="form-control" name="area" id="area" placeholder="Ingrese su Área de conocimiento" required>
 				  					</div>
 			  					</div><!-- /.col-md-4 -->
 			    				<div class="col-md-4">
 				    				<div class="form-group">
-				    					<label for="grado">Grado/s a cargo</label>
-				    					<input type="text" class="form-control" name="grado" id="grado" placeholder="Ingrese sus nombres completos" required>
+				    					<label for="grado">Grado/s o Año/s a cargo</label>
+				    					<input type="text" class="form-control" name="grado" id="grado" placeholder="Ingrese los grados o años a cargo" required>
 				  					</div>
 			  					</div><!-- /.col-md-4 -->
 		  					</div><!-- /.row -->
@@ -183,7 +184,7 @@
 		    					</div><!-- /.col-md-4 -->
 		    				</div><!-- /.row -->
 				    		<div class="form-group">
-				    			<label for="descripcionperfil">Descripción de su perfil<br><small>(Nivel de estudios, gustos, áreas de interés, trayectoria)</small></label>
+				    			<label for="descripcionperfil">Descripción breve de su perfil<br><small>(Nivel de estudios, áreas de interés, trayectoria)</small></label>
 		    					<textarea name="descripcionperfil" id="descripcionperfil" class="form-control" rows="5" placeholder="Describa su perfil" required></textarea>
 		    				</div>
 			  			</div><!-- /.panel-body -->
@@ -203,7 +204,7 @@
 			    				<div class="col-md-6">
 		    						<div class="row">
 		    							<div class="col-md-12">
-				    						<strong>Nivel en que se ejecuta la iniciativa</strong>
+				    						<strong>Nivel en que se ejecuta la Iniciativa</strong>
 			    						</div><!-- /.col-md-12 -->
 		    							<div class="col-md-12">
 				    						<div class="radio">
@@ -368,7 +369,7 @@
 			    				</div><!-- /.col-md-6 -->
 			    				<div class="col-md-6">
 					    			<div class="form-group">
-						    			<label for="resumenIP">Resumen<br><small>Describa brevemente de qué se trata la iniciativa teniendo en cuenta lo siguiente: tema, objetivos, población con la que trabaja, resultados esperados y logrados, metodología utilizada, lecciones aprendidas. Máximo 300 palabras.</small></label>
+						    			<label for="resumenIP">Resumen<br><small>Describa brevemente de qué se trata la iniciativa teniendo en cuenta lo siguiente: tema, objetivos, población con la que trabaja, resultados esperados y logrados, metodología utilizada, lecciones aprendidas.<br>Máximo 300 palabras.</small></label>
 				    					<textarea id="resumenIP" name="resumenIP" class="form-control" rows="5" placeholder="Describa la iniciativa brevemente" required></textarea>
 			    					</div>
 			    				</div><!-- /.col-md-6 -->
@@ -376,7 +377,7 @@
 			    			<div class="row">
 			    				<div class="col-md-12">
 					    			<div class="form-group">
-						    			<label for="contextoIP">Descripción de la situación o contexto<br><small>¿Cuál es la situación que ha dado origen a la iniciativa pedagógica?, ¿cuál es el escenario o el contexto donde se ha desarrollado dicha situación?, Indague los posibles factores asociados a la realidad que se ha abordado o busca abordar en esta propuesta pedagógica. Por favor, descríbalos.</small></label>
+						    			<label for="contextoIP">Descripción de la situación o contexto<br><small>¿Cuál es la situación que ha dado origen a la iniciativa pedagógica?, ¿cuál es el escenario o el contexto donde se ha desarrollado dicha situación?. Indague los posibles factores asociados a la realidad que se ha abordado o busca abordar en esta propuesta pedagógica. Por favor, descríbalos.</small></label>
 				    					<textarea name="contextoIP" id="contextoIP" class="form-control" rows="5" placeholder="Describa la situación o contexto"></textarea>
 			    					</div>
 					    			<div class="form-group oculto" id="antecedentesIP"><!-- Oculto temporalmente -->
@@ -461,7 +462,7 @@
 			    				</div><!-- /.col-md-12 #plandeaccion -->
 			    				<div class="col-md-12">
 					    			<div class="form-group">
-						    			<label for="seguimientoIP">Seguimiento, evaluación y monitoreo<br><small>¿Qué mecanismos se utilizan para dar cuenta del cumplimiento de los objetivos y metas propuestos para la iniciativa? Busque evidenciar este proceso (fotos, videos, entrevistas, encuestas, etc.)</small></label>
+						    			<label for="seguimientoIP">Seguimiento, evaluación y monitoreo<br><small>¿Qué mecanismos se utilizan para dar cuenta del cumplimiento de los objetivos y metas propuestos para la iniciativa? En caso que aún no realice tareas de seguimiento y evaluación, ¿considera que lo hará en el futuro cercano?   </small></label>
 				    					<textarea name="seguimientoIP" id="seguimientoIP" class="form-control" rows="5" placeholder="Describa el seguimiento, evaluación y monitoreo de la iniciativa"></textarea>
 			    					</div>
 					    			<div class="form-group oculto" id="monitoreoIP"><!-- Oculto temporalmente -->
