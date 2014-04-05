@@ -12,6 +12,7 @@ var opcionesForm = {
     beforeSend:         iniciarCarga,
     uploadProgress:     mostrarProgreso,
     success:            mostrarOK,
+    error:              errorCarga,
     dataType:           'json'
 };
 function iniciarCarga(){
@@ -28,18 +29,34 @@ function mostrarProgreso(event,position,total,percentComplete){
 }
 function mostrarOK(respuesta,estatus,xhr,jqForm){
     var barraDeProgreso = '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">Completado 100%</span></div></div>';
-    $('#progreso').html(barraDeProgreso);
-    $('.modal-body p').html(respuesta.nombres+' '+respuesta.apellidos+' sus datos han sido registrados exitosamente.<br><br>Muchas gracias por su participación.');
+    $('#progreso').html(barraDeProgreso);    
     console.log('Datos cargados finalmente');
-    console.log(respuesta);
-    //borrarDatos();
-    $('#ventanaProgreso').on('hidden.bs.modal', function () {
-        $('form').hide();
-        $('#navegacion').hide();
-        $('#instrucciones p:first').html('Gracias por su interés en esta iniciativa.');
-        $('#instrucciones p:last').html('Próximamente nos comunicaremos con usted a través de su correo electrónico.');
-   });
+    $('#cerrarModal').show();
+    $('button.close').show();
+    if (respuesta.registro == 'exitoso') {
+        borrarDatos();
+        $('.modal-body p').html(respuesta.nombres+' '+respuesta.apellidos+' sus datos han sido registrados exitosamente.<br><br>¡Muchas gracias por su participación!<br>Su ficha fue enviada de manera correcta.<br>Está información será evaluada y los nombres de las personas seleccionadas para realizar el curso Ciudadanías serán publicadas en esta página el 29 de abril.');
+        $('#ventanaProgreso').on('hidden.bs.modal', function () {
+            ocultaFormulario();
+            $('#instrucciones p:first').html('Gracias por su interés en esta iniciativa.');
+            $('#instrucciones p:last').html(respuesta.nombres+' '+respuesta.apellidos+' sus datos han sido registrados exitosamente.<br><br>¡Muchas gracias por su participación!<br>Su ficha fue enviada de manera correcta.<br>Esta información será evaluada y los nombres de las personas seleccionadas para realizar el curso Ciudadanías serán publicadas en esta página el 29 de abril.');
+       });
+   }
+   if (respuesta.registro == 'error') {
+       $('.modal-body p').html('Los datos no se han registrado: '+respuesta.mensaje);
+   }
    return false;
+}
+function errorCarga(m) {
+    $('#progreso').html(m);
+    $('.modal-body p').html('Ha ocurrido un error en la carga de los datos. Intente nuevamente mas adelante.');
+    console.log('Error en la carga de datos');
+}
+function ocultaFormulario() {
+    $('form').hide();
+    $('#navegacion').hide();
+    $('#instrucciones p:first').html('');
+    $('#instrucciones p:last').html('');
 }
 $(function(){
    $('#guardando').hide();
@@ -48,9 +65,15 @@ $(function(){
       if (supports_html5_storage()) {
           cargarDatos();
           window.setInterval(guardarDatos, 20 * 1000);
+           /* */
            $("#formulario").submit(function() {
                event.preventDefault();
-               $('#ventanaProgreso').modal();
+               $('#cerrarModal').hide();
+               $('button.close').hide();
+               $('#ventanaProgreso').modal({
+                   backdrop:    'static',
+                   keyboard:    false
+               });
                console.log('Validando datos');
                if (validarDatos()){
                    console.log('Enviando datos');
@@ -61,6 +84,7 @@ $(function(){
                    $('#alertaPoblacionIP').removeClass('hidden');
                }
            });
+           /* */
        }
    });
    ajustarAlturaFichas();
@@ -80,44 +104,6 @@ $(function(){
        departamento = $('select#departamento option:selected').val();
        cambiaDepto();
    });
-   
-   $('#nombreIE').jqBootstrapValidation();
-   $('#zonaIE').jqBootstrapValidation();
-   $('#direccionIE').jqBootstrapValidation();
-   $('#telefonoIE').jqBootstrapValidation();
-   $('#emailIE').jqBootstrapValidation();
-   $('#nombres').jqBootstrapValidation();
-   $('#apellidos').jqBootstrapValidation();
-   $('#cargo').jqBootstrapValidation();
-   $('#area').jqBootstrapValidation();
-   $('#grado').jqBootstrapValidation();
-   $('#direccion').jqBootstrapValidation();
-   $('#telefono').jqBootstrapValidation();
-   $('#email').jqBootstrapValidation();
-   $('#descripcionperfil').jqBootstrapValidation();
-   $('#nombreIP').jqBootstrapValidation();
-   $('#resumenIP').jqBootstrapValidation();
-   /*
-   $('#poblacionIP_estudiantes').jqBootstrapValidation();
-   $('#poblacionIP_docentes').jqBootstrapValidation();
-   $('#poblacionIP_directivas').jqBootstrapValidation();
-   $('#poblacionIP_padres').jqBootstrapValidation();
-   $('#poblacionIP_miembros').jqBootstrapValidation();
-   $('#poblacionIP_otros').jqBootstrapValidation();
-   $('#poblacionIP_otrosTexto').jqBootstrapValidation();
-   $('#poblacionIP_estudiantesCant').jqBootstrapValidation();
-   $('#poblacionIP_docentesCant').jqBootstrapValidation();
-   $('#poblacionIP_directivasCant').jqBootstrapValidation();
-   $('#poblacionIP_padresCant').jqBootstrapValidation();
-   $('#poblacionIP_miembrosCant').jqBootstrapValidation();
-   $('#poblacionIP_otrosCant').jqBootstrapValidation();
-   $('#tiempoIP').jqBootstrapValidation();
-   $('#pais').jqBootstrapValidation();
-   $('#departamento').jqBootstrapValidation();
-   $('#municipio').jqBootstrapValidation();
-   $('#nivelIP').jqBootstrapValidation();
-   $('#otroNivelIP').jqBootstrapValidation();
-   */
    $('input[name="nivelIP"]').click(function() {
        habilitaNivelIP();
    });
@@ -260,14 +246,6 @@ function cargarDatos() {
     if(localStorage["registro-cisp.nombreIP"] && localStorage["registro-cisp.nombreIP"] != 'undefined') $("#nombreIP").val(localStorage["registro-cisp.nombreIP"]);
     if(localStorage["registro-cisp.nivelIP"] && localStorage["registro-cisp.nivelIP"] != 'undefined') $("#nivelIP").val(localStorage["registro-cisp.nivelIP"]);
     if(localStorage["registro-cisp.otroNivelIP"] && localStorage["registro-cisp.otroNivelIP"] != 'undefined') $("#otroNivelIP").val(localStorage["registro-cisp.otroNivelIP"]);
-    /*
-    if(localStorage["registro-cisp.poblacionIP_estudiantes"]) $('input[name="poblacionIP_estudiantes"').val(localStorage["registro-cisp.poblacionIP_estudiantes"]);
-    if(localStorage["registro-cisp.poblacionIP_docentes"]) $('input[name="poblacionIP_docentes"').val(localStorage["registro-cisp.poblacionIP_docentes"]);
-    if(localStorage["registro-cisp.poblacionIP_directivas"]) $('input[name="poblacionIP_directivas"').val(localStorage["registro-cisp.poblacionIP_directivas"]);
-    if(localStorage["registro-cisp.poblacionIP_padres"]) $('input[name="poblacionIP_padres"').val(localStorage["registro-cisp.poblacionIP_padres"]);
-    if(localStorage["registro-cisp.poblacionIP_miembros"]) $('input[name="poblacionIP_miembros"').val(localStorage["registro-cisp.poblacionIP_miembros"]);
-    if(localStorage["registro-cisp.poblacionIP_otros"]) $('input[name="poblacionIP_otros"').val(localStorage["registro-cisp.poblacionIP_otros"]);
-    */
     if(localStorage["registro-cisp.poblacionIP_otrosTexto"] && localStorage["registro-cisp.poblacionIP_otrosTexto"] != 'undefined') $("#poblacionIP_otrosTexto").val(localStorage["registro-cisp.poblacionIP_otrosTexto"]);
     if(localStorage["registro-cisp.poblacionIP_estudiantesCant"] && localStorage["registro-cisp.poblacionIP_estudiantesCant"] != 'undefined') $("#poblacionIP_estudiantesCant").val(localStorage["registro-cisp.poblacionIP_estudiantesCant"]);
     if(localStorage["registro-cisp.poblacionIP_docentesCant"] && localStorage["registro-cisp.poblacionIP_docentesCant"] != 'undefined') $("#poblacionIP_docentesCant").val(localStorage["registro-cisp.poblacionIP_docentesCant"]);
@@ -343,7 +321,6 @@ function guardarDatos(){
     if($('input[name="poblacionIP_padres"]:checked').length) localStorage["poblacionIP_padres"] = $('input[value="poblacionIP_padres"]').val();
     if($('input[name="poblacionIP_miembros"]:checked').length) localStorage["poblacionIP_miembros"] = $('input[value="poblacionIP_miembros"]').val();
     if($('input[name="poblacionIP_otros"]:checked').length) localStorage["poblacionIP_otros"] = $('input[value="poblacionIP_otros"]').val();
-
     localStorage["registro-cisp.nombreIE"] = $("#nombreIE").val();
     localStorage["registro-cisp.zonaIE"] = $("#zonaIE").val();
     localStorage["registro-cisp.direccionIE"] = $("#direccionIE").val();

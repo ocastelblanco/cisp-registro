@@ -17,6 +17,8 @@ if (isset($_GET['pais']) && isset($_GET['numero'])) {
 	if ($_GET['pais'] == "Todos") {
 		$th = "<th>Nombres&nbsp;<i class='fa fa-sort'></i></th><th>Apellidos&nbsp;<i class='fa fa-sort'></i></th><th>Iniciativa&nbsp;<i class='fa fa-sort'></i></th><th>Fecha&nbsp;<i class='fa fa-sort'></i></th><th>País&nbsp;<i class='fa fa-sort'></i></th><th>Estado</th><th>Ver</th>";
 		$colFijas = "{\"5\": {\"sorter\": false}, \"6\": {\"sorter\": false}}";
+		$colFijasOrg = array('5'=>array('sorter'=>false), '6'=>array('sorter'=>false));
+		$colFijasJSON = json_encode($colFijasOrg);
 		$partQuery = "";
 		$whereRev = "";
 	} else {
@@ -50,8 +52,10 @@ if (isset($_GET['pais']) && isset($_GET['numero'])) {
 	$resultadoNot = $mysqli->query($queryNot);
 	$fila = $resultadoNot->fetch_assoc();
 	$numNotificados = $fila['COUNT(*)'];
-	$salida = array();
-	echo "{\"pendientes\": \"$numPendientes\", \"notificados\": \"$numNotificados\", \"th\": \"$th\", \"cuerpoTabla\": \"$cuerpoTabla\", \"headers\": $colFijas, \"registros\": \"$numRegistros\"}";
+	$salida = array('pendientes'=>$numPendientes, 'notificados'=>$numNotificados, 'th'=>$th, 'cuerpoTabla'=>$cuerpoTabla, 'headers'=>$colFijasOrg, 'registros'=>$numRegistros);
+	$salidaJSON = json_encode($salida);
+	echo $salidaJSON;
+	//echo "{\"pendientes\": \"$numPendientes\", \"notificados\": \"$numNotificados\", \"th\": \"$th\", \"cuerpoTabla\": \"$cuerpoTabla\", \"headers\": $colFijas, \"registros\": \"$numRegistros\"}";
 	$mysqli->close();
 } // if (isset($_GET['pais']))
 ?>

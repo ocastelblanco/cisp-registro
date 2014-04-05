@@ -13,16 +13,15 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <!-- Estilos propios -->
     <link href="css/registro-cisp.css" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->	
   </head>
 
   <body data-spy="scroll" data-target="#navegacion" data-offset="80">
-
+  
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -558,8 +557,18 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <!--
     <script src="js/jqBootstrapValidation.min.js"></script>
+    -->
     <script src="js/jquery.form.min.js"></script>
     <script src="js/registro-cisp.js"></script>
+	<script type="text/javascript">
+		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
+			var ieversion=new Number(RegExp.$1); // capture x.x portion and store as a number
+			if (ieversion<9) {
+				$('body').html('<div style="color: #FFFFFF;">Su navegador es obsoleto y no es compatible con esta plataforma. Por favor actualice su sistema <a href="http://windows.microsoft.com/es-co/internet-explorer/download-ie-MCM?FORM=MI09JK&amp;OCID=MI09JK">haciendo clic aquí</a></div>');
+			}  
+		}
+	</script> 
   </body>
 </html>
