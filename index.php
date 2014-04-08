@@ -49,7 +49,7 @@
 		<p>Agradecemos anexar cualquier material concerniente a la iniciativa pedagógica, como archivos adjuntos.</p>
 		<p>Si tiene dudas sobre el diligenciamiento de este formulario, escíbanos a: <a href="mailto:cursociudadanias@gmail.com">cursociudadanias@gmail.com</a></p>
     </div><!-- /.page-header -->
-	<form role="form" id="formulario" method="post" action="registro.php">
+	<form role="form" id="formulario" method="post" action="registro.php" enctype="multipart/form-data">
 	    <div class="container">
 			<div class="row">
 				<div class="col-md-1"></div>

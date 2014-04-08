@@ -1,6 +1,7 @@
 <?php
     require_once 'lib/config.php';
 	$mensajeError = "";
+	$id = "";
 	$mysqli = new mysqli($servidor,$usuario,$clave,$basedatos);
 	if ($mysqli->connect_errno) {
 	    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -13,8 +14,11 @@
 	if ($fila['id'] == "") {
 		$query = "INSERT INTO `registrodocentes` (";
 		foreach ($_POST as $clave => $valor) {
-			if ($valor) 
-				$query .= "`$clave`, ";
+			if ($valor) {
+				if (substr($clave, 7) != "anexoIP") {
+					$query .= "`$clave`, ";
+				}
+			}
 		}
 		$query .= "`estado`, `notificado`,`fecha`) VALUES (";
 		foreach ($_POST as $clave => $valor) {
@@ -26,7 +30,7 @@
 					$valor == 'poblacionIP_miembros' ||
 					$valor == 'poblacionIP_otros') {
 						$query .= "1,";		
-				} else {
+				} elseif (substr($clave, 7) != "anexoIP") {
 					$query .= "'$valor', ";
 				}
 			}
@@ -41,8 +45,8 @@
 		$query2 = "SELECT * FROM `registrodocentes` WHERE `nombres`='".$_POST["nombres"]."' AND `apellidos`='".$_POST["apellidos"]."' AND `nombreIP`='".$_POST["nombreIP"]."'";
 		$resultado = $mysqli->query($query2);
 		$fila = $resultado->fetch_assoc();
-		$id = $fila['id'];
-		if (count($_FILES) > 0) {
+		if (count($_FILES) > 0 && isset($fila['id'])) {
+			$id = $fila['id'];
 			$uploads_dir = '/uploads';
 			$query3 = "UPDATE `registrodocentes` SET ";
 			$errorCargaArchivos = false;
@@ -55,6 +59,7 @@
 			        move_uploaded_file($tmp_name, getcwd()."$uploads_dir/$name");
 				} else {
 					$errorCargaArchivos = true;
+					$mensajeError .= "<br><br>Error: Los archivos adjuntos no se cargaron correctamente.";
 				}
 			}
 			$query3 = substr($query3,0,-2);
@@ -67,7 +72,7 @@
 		    }
 		}
 	} else {
-		$mensajeError .= "\nLa iniciativa pedagógica ya está registrada.";
+		$mensajeError .= "La iniciativa pedagógica ya está registrada con el ID: ".$fila['id'];
 	}
 	if ($mensajeError != ""){
 		$salida = array('registro'=>'error', 'mensaje'=>$mensajeError);
