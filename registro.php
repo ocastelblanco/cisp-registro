@@ -11,7 +11,29 @@
 	$query0 = "SELECT * FROM `registrodocentes` WHERE `nombres`='".$_POST["nombres"]."' AND `apellidos`='".$_POST["apellidos"]."' AND `nombreIP`='".$_POST["nombreIP"]."'";
 	$resultado = $mysqli->query($query0);
 	$fila = $resultado->fetch_assoc();
-	if ($fila['id'] == "") {
+	if (!isset($_POST['nombreIE']) || strlen($_POST['nombreIE']) < 3 ||
+		!isset($_POST['pais']) || strlen($_POST['pais']) < 3 ||
+		!isset($_POST['departamento']) || strlen($_POST['departamento']) < 3 ||
+		!isset($_POST['municipio']) || strlen($_POST['municipio']) < 3 ||
+		!isset($_POST['zonaIE']) || strlen($_POST['zonaIE']) < 3 ||
+		!isset($_POST['direccionIE']) || strlen($_POST['direccionIE']) < 3 ||
+		!isset($_POST['telefonoIE']) || strlen($_POST['telefonoIE']) < 3 ||
+		!isset($_POST['emailIE']) || strlen($_POST['emailIE']) < 3 ||
+		!isset($_POST['nombres']) || strlen($_POST['nombres']) < 3 ||
+		!isset($_POST['apellidos']) || strlen($_POST['apellidos']) < 3 ||
+		!isset($_POST['cargo']) || strlen($_POST['cargo']) < 3 ||
+		!isset($_POST['area']) || strlen($_POST['area']) < 3 ||
+		!isset($_POST['grado']) || strlen($_POST['grado']) < 3 ||
+		!isset($_POST['direccion']) || strlen($_POST['direccion']) < 3 ||
+		!isset($_POST['telefono']) || strlen($_POST['telefono']) < 3 ||
+		!isset($_POST['email']) || strlen($_POST['email']) < 3 ||
+		!isset($_POST['nombreIP']) || strlen($_POST['nombreIP']) < 3) {
+		$mensajeError .= "Los datos de la Iniciativa Pedagógica están incompletos. No se ha generado el registro.";
+	}
+	if ($fila['id'] != "") {
+		$mensajeError .= "La iniciativa pedagógica ya está registrada con el ID: ".$fila['id'];
+	}
+	if ($mensajeError == "") {
 		$query = "INSERT INTO `registrodocentes` (";
 		foreach ($_POST as $clave => $valor) {
 			if ($valor) {
@@ -71,8 +93,6 @@
 				}
 		    }
 		}
-	} else {
-		$mensajeError .= "La iniciativa pedagógica ya está registrada con el ID: ".$fila['id'];
 	}
 	if ($mensajeError != ""){
 		$salida = array('registro'=>'error', 'mensaje'=>$mensajeError);

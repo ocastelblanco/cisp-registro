@@ -61,35 +61,6 @@ function ocultaFormulario() {
 }
 $(function(){
    $('#guardando').hide();
-   $.getJSON('js/municipios.json', function(datos){
-      console.log("Municipios cargados");
-      paises = datos;
-      if (supports_html5_storage()) {
-          cargarDatos();
-          window.setInterval(guardarDatos, 20 * 1000);
-           /* */
-           $("#formulario").submit(function() {
-               console.log("Inicia envío de datos");
-               event.preventDefault();
-               $('#cerrarModal').hide();
-               $('button.close').hide();
-               $('#ventanaProgreso').modal({
-                   backdrop:    'static',
-                   keyboard:    false
-               });
-               console.log('Validando datos');
-               if (validarDatos()){
-                   console.log('Enviando datos');
-                   $('#alertaPoblacionIP').addClass('hidden');
-                   $("#formulario").ajaxSubmit(opcionesForm);
-               } else {
-                   $('.modal-body p').html('Hay un error de validación en el formulario.<br><br>Cierre esta ventana, revise y corrija el error para poder continuar');
-                   $('#alertaPoblacionIP').removeClass('hidden');
-               }
-           });
-           /* */
-       }
-   });
    ajustarAlturaFichas();
    $(window).resize(function() {
        ajustarAlturaFichas();
@@ -137,6 +108,37 @@ $(function(){
        nuevaFila(this);
    });
    */
+   $.getJSON('js/municipios.json', function(datos){
+      console.log("Municipios cargados");
+      paises = datos;
+      if (supports_html5_storage()) {
+          window.setInterval(guardarDatos, 20 * 1000);
+           /* */
+           $("#formulario").submit(function() {
+               console.log("Inicia envío de datos");
+               event.preventDefault();
+               $('#cerrarModal').hide();
+               $('button.close').hide();
+               $('#ventanaProgreso').modal({
+                   backdrop:    'static',
+                   keyboard:    false
+               });
+               console.log('Validando datos');
+               if (validarDatos()){
+                   console.log('Enviando datos');
+                   $('#alertaPoblacionIP').addClass('hidden');
+                   $("#formulario").ajaxSubmit(opcionesForm);
+               } else {
+                   $('.modal-body p').html('Hay un error de validación en el formulario.<br><br>Cierre esta ventana, revise y corrija el error para poder continuar');
+                   $('#alertaPoblacionIP').removeClass('hidden');
+                   $('#cerrarModal').show();
+                   $('button.close').show();
+               }
+           });
+           /* */
+          cargarDatos();
+       }
+   });
 });
 // ---------------------> Funciones generales
 function cambiaDepto() {
