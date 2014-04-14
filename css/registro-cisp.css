@@ -112,8 +112,11 @@ body {
     line-height: 12px;
     margin-top: 15px;
 }
-#revisar h1,
-#revisar p {
+.modal .well p {
+    color: #000000;
+}
+#revisar #page-wrapper h1,
+#revisar #page-wrapper p {
     color:white;
 }
 #notificar h1,
@@ -148,8 +151,3 @@ body {
 #inicio p {
     font-size: 16px;
 }
-/*
-.well > p {
-    color: #000000;
-}
-*/
