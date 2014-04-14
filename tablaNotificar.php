@@ -40,6 +40,8 @@
 		$cuerpoTabla .= "<td>".$estados[$fila['estado']]."</td>";
 		$cuerpoTabla .= "</tr>";
 	}
-	echo "{\"cuerpoTabla\": \"$cuerpoTabla\", \"registros\": \"$numRegistros\", \"notificados\": \"$numNotificados\", \"sinAprobar\": \"$sinAprobar\", \"porNotificar\": \"$porNotificar\"}";
+	$salida = array("cuerpoTabla" => $cuerpoTabla, "registros" => $numRegistros, "notificados" => $numNotificados, "sinAprobar" => $sinAprobar, "porNotificar" => $porNotificar);
+	echo json_encode($salida);
+	//echo "{\"cuerpoTabla\": \"$cuerpoTabla\", \"registros\": \"$numRegistros\", \"notificados\": \"$numNotificados\", \"sinAprobar\": \"$sinAprobar\", \"porNotificar\": \"$porNotificar\"}";
 	$mysqli->close();
 ?>
